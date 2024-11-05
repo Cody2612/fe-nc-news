@@ -3,12 +3,13 @@ import { useParams } from 'react-router-dom'
 import { getArticlesById } from '../api';
 import ErrorPage from '../components/ErrorPage';
 import { Card, Button } from 'react-bootstrap';
+import Comments from '../components/Comments';
 
 const ArticleCardDetails = () => {
   const {article_id} = useParams();
   const [article, setArticle] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(null);
+  const [isError, setIsError] = useState(false);
   
   useEffect(()=>{
     setIsLoading(true);
@@ -33,7 +34,7 @@ if(isError){
 }
   
   return (
-    <div className="border-2">
+    <div>
       <h2>{article.title}</h2>
       <Card>
         <Card.Img variant="top" src={article.article_img_url} alt={article.title} />
@@ -53,7 +54,7 @@ if(isError){
       <Card >
         <Card.Body>
           <div>
-            previous comments
+            <Comments {...article} />
           </div>
         </Card.Body>
 
@@ -72,26 +73,6 @@ if(isError){
           </div>
         </Card.Footer>
       </Card>
-
-      
-      {/* <Card className="my-5">
-        <Card.Body>
-          <Card.Title>{article.title}</Card.Title>
-          <Card.Subtitle className="mb-4 text-muted">By {article.author}</Card.Subtitle>
-          <p>{article.body}</p>
-          <div className="d-flex flex-column">
-            <span className="mb-2">Votes: {article.votes}</span>
-            <div>
-              <Button variant="success" className="me-2">Vote Up</Button>
-              <Button variant="danger">Vote Down</Button>
-            </div>
-          </div>
-        </Card.Body>
-      </Card> */}
-      
-       
-     
-
     </div>
   )
 }
