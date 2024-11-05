@@ -6,6 +6,7 @@ import Articles from '../src/pages/Articles'
 import Topics from '../src/pages/Topics'
 import Logout from'../src/pages/Logout'
 import Login from'../src/pages/Login'
+import ArticleCardDetails from './pages/ArticleCardDetails'
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Container className='mb-4'>
       <Routes>
         <Route path ="/" element = {<Articles />}/>
+        <Route path ="/articles/:article_id" element = {<ArticleCardDetails />}/>
         <Route path ="/topics" element = {<Topics />}/>
         <Route path="/logout" element = {<Logout />} />
         <Route path="/login" element = {<Login />} />
