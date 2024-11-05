@@ -8,7 +8,7 @@ import ErrorPage from "./ErrorPage";
 export default function ArticleList () {
    const [articleList, setArticleList] = useState([]);
    const [isLoading, setIsLoading] = useState(false);
-   const [isError, setIsError] = useState(null);
+   const [isError, setIsError] = useState(false);
 
 
 useEffect(()=>{
@@ -20,8 +20,8 @@ setIsLoading(true);
     })
     .catch((error)=>{
         setIsLoading(false)
-        setIsError(`Error loading items`)
-        console.log("No items", error);
+        setIsError(`Error loading articles`)
+        console.log("No articles", error);
    });
 }, []);
 
