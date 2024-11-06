@@ -4,6 +4,7 @@ import { getArticlesById, patchArticleVotes } from '../api';
 import ErrorPage from '../components/ErrorPage';
 import { Card, Button } from 'react-bootstrap';
 import Comments from '../components/Comments';
+import AddComment from '../components/AddComment';
 
 const ArticleCardDetails = () => {
   const {article_id} = useParams();
@@ -11,6 +12,7 @@ const ArticleCardDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [updatedVote, setUpdatedVote] = useState(0);
+
   
   useEffect(()=>{
     setIsLoading(true);
@@ -41,6 +43,12 @@ const handleUpdatedVote = (updatedVote) => {
   }));
   setUpdatedVote((currentVote) => currentVote - updatedVote)
   });
+}
+
+const handleAddComment = (newComment) =>{
+  setArticle(currArticle => ({
+    ...currArticle, comments: [newComment,...currArticle.comments]
+  }))
 }
   
 if (isLoading){
@@ -91,24 +99,10 @@ if(isError){
       </Card> 
       <Card >
         <Card.Body>
-          <div>
             <Comments {...article} />
-          </div>
         </Card.Body>
-
-        <Card.Footer className="py-3 border-0" style={{backgroundColor: "#f8f9fa"}}>
-          <div className="d-flex flex-start w-100">
-            
-            <div className="form-outline w-100">
-              <textarea className="form-control" id="textAreaExample" rows="4"
-                style={{background: "#fff"}}></textarea>
-              <label className="form-label" htmlFor="textAreaExample">Message</label>
-            </div>
-          </div>
-          <div className="float-end mt-2 pt-1">
-            <Button variant="outline-primary" size="sm" className="me-2">Add comment</Button>
-            <Button variant="outline-danger" size="sm">Cancel</Button>
-          </div>
+        <Card.Footer>
+            <AddComment {...article} onNewComment={handleAddComment} />
         </Card.Footer>
       </Card>
     </div>

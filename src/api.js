@@ -29,9 +29,14 @@ export const getCommentsByArticleId = (id) => {
     })
 }
 
-
 export const patchArticleVotes = (id, updatedVote) => {
     return api.patch(`/articles/${id}`, {inc_votes: updatedVote}).then((response)=>{
         return response.data.article;
+    })
+}
+
+export const postArticleComment = (id, username, body) =>{
+    return api.post(`/articles/${id}/comments`, {username, body}).then((response)=>{
+        return response.data.comment;
     })
 }
