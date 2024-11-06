@@ -1,7 +1,14 @@
 import React from 'react'
 import { Card, Button } from 'react-bootstrap'
 
-const CommentCard = ({author, body, votes, created_at}) => {
+const CommentCard = ({comment_id, author, body, votes, created_at, onDeleteComment, currentUser }) => {
+
+  const isMyOwnComment = currentUser === author;
+
+  const handleDelete = () => {
+    onDeleteComment(comment_id);
+  }
+  
   return (
     <Card className="mb-2">
       <Card.Body>
@@ -11,7 +18,7 @@ const CommentCard = ({author, body, votes, created_at}) => {
         <Card.Text>{body}</Card.Text>
         <div className="d-flex justify-content-between align-items-center">
           <span>Votes: {votes}</span>
-          <Button variant="outline-danger" size="sm">Delete</Button>
+          {isMyOwnComment && (<Button variant="outline-danger" size="sm" onClick={handleDelete}>Delete</Button>)}
         </div>
       </Card.Body>
     </Card>

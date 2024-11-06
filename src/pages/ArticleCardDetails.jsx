@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getArticlesById, getCommentsByArticleId, patchArticleVotes } from '../api';
+import { deleteComment, getArticlesById, getCommentsByArticleId, patchArticleVotes } from '../api';
 import ErrorPage from '../components/ErrorPage';
 import { Card, Button } from 'react-bootstrap';
 import Comments from '../components/Comments';
@@ -13,7 +13,7 @@ const ArticleCardDetails = () => {
   const [isError, setIsError] = useState(false);
   const [updatedVote, setUpdatedVote] = useState(0);
   const [comments, setComments] = useState([]);
-
+  const [currentUser, setCurrentUser] = useState("cooljmessy")
   
   useEffect(()=>{
     setIsLoading(true);
@@ -49,6 +49,16 @@ const handleUpdatedVote = (updatedVote) => {
 
 const handleAddComment = (newComment) =>{
   setComments((currentComments)=> [newComment, ...currentComments]);
+}
+
+const handleDeleteComment = (comment_id) => {
+  deleteComment(comment_id)
+  .then(()=>{
+    setComments((currentComments) => currentComments.filter(comment => comment.comment_id !== comment_id))
+  })
+  .catch((error)=>{
+    console.log("Not able to delete the comment", error);
+  })
 }
   
 if (isLoading){
@@ -99,7 +109,7 @@ if(isError){
       </Card> 
       <Card >
         <Card.Body>
-            <Comments comments={comments} />
+            <Comments comments={comments} article_id={article_id} currentUser={currentUser} onDeleteComment={handleDeleteComment}  />
         </Card.Body>
         <Card.Footer>
             <AddComment article_id={article_id} onNewComment={handleAddComment} />
