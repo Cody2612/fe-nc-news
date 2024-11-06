@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getArticlesById, patchArticleVotes } from '../api';
+import { getArticlesById, getCommentsByArticleId, patchArticleVotes } from '../api';
 import ErrorPage from '../components/ErrorPage';
 import { Card, Button } from 'react-bootstrap';
 import Comments from '../components/Comments';
@@ -12,13 +12,15 @@ const ArticleCardDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [updatedVote, setUpdatedVote] = useState(0);
+  const [comments, setComments] = useState([]);
 
   
   useEffect(()=>{
     setIsLoading(true);
-    getArticlesById(article_id)
-    .then((articleData)=>{
+    Promise.all([getArticlesById(article_id), getCommentsByArticleId(article_id)])
+    .then(([articleData, commentsData])=>{
       setArticle(articleData);
+      setComments(commentsData);
       setIsLoading(false);
     })
     .catch((error)=>{
@@ -46,9 +48,7 @@ const handleUpdatedVote = (updatedVote) => {
 }
 
 const handleAddComment = (newComment) =>{
-  setArticle(currArticle => ({
-    ...currArticle, comments: [newComment,...currArticle.comments]
-  }))
+  setComments((currentComments)=> [newComment, ...currentComments]);
 }
   
 if (isLoading){
@@ -99,10 +99,10 @@ if(isError){
       </Card> 
       <Card >
         <Card.Body>
-            <Comments {...article} />
+            <Comments comments={comments} />
         </Card.Body>
         <Card.Footer>
-            <AddComment {...article} onNewComment={handleAddComment} />
+            <AddComment article_id={article_id} onNewComment={handleAddComment} />
         </Card.Footer>
       </Card>
     </div>

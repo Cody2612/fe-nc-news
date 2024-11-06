@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, Button, Form } from 'react-bootstrap'
+import { Card, Button} from 'react-bootstrap'
 import { postArticleComment } from '../api';
 
 const AddComment = ({article_id, onNewComment}) => {
@@ -8,7 +8,6 @@ const AddComment = ({article_id, onNewComment}) => {
 
   const handleSubmit = (event) =>{
     event.preventDefault();
-
     setSubmit(true);
     const username = "cooljmessy";
 

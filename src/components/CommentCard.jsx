@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Button } from 'react-bootstrap'
 
-const SingleComment = ({author, body, votes, created_at}) => {
+const CommentCard = ({author, body, votes, created_at}) => {
   return (
     <Card className="mb-2">
       <Card.Body>
@@ -18,4 +18,4 @@ const SingleComment = ({author, body, votes, created_at}) => {
   )
 }
 
-export default SingleComment
+export default CommentCard
