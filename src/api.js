@@ -5,8 +5,8 @@ const api = axios.create({
     baseURL: "https://myfirstapi-vhbe.onrender.com/api"
 })  
 
-export const getArticles = () => {
-    return api.get("/articles").then((response)=>{
+export const getArticles = (sortBy = "created_at", order = "DESC") => {
+    return api.get("/articles", {params: {sort_by: sortBy, order: order},}).then((response)=>{
         return response.data.articles;
     })
 }
