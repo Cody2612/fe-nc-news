@@ -6,7 +6,7 @@ const Comments = ({comments = [], currentUser, onDeleteComment, article_id}) => 
 
 return (
   <>
-    <h2>Comments</h2>
+    <h3>Comments</h3>
     <div>
         {comments.length > 0 ? (comments.map((comment) => (
           <CommentCard 

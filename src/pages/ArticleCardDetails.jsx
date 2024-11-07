@@ -25,8 +25,7 @@ const ArticleCardDetails = () => {
     })
     .catch((error)=>{
       setIsLoading(false)
-      setIsError(`Error loading article`)
-      console.log("No article", error);
+      setIsError(true);
  });
 }, [article_id])
 
@@ -57,7 +56,8 @@ const handleDeleteComment = (comment_id) => {
     setComments((currentComments) => currentComments.filter(comment => comment.comment_id !== comment_id))
   })
   .catch((error)=>{
-    console.log("Not able to delete the comment", error);
+    setIsError(true);
+    return <ErrorPage message="Not possible to delete comment" />;
   })
 }
   
@@ -66,7 +66,7 @@ if (isLoading){
 }
 
 if(isError){
-   return <ErrorPage />;
+   return <ErrorPage message="No article" />;
 }
   
   return (
@@ -106,14 +106,16 @@ if(isError){
             </div>
           </div>
         </Card.Body>
+        <Card.Footer>
+        <h4>Post a comment</h4>
+        <AddComment article_id={article_id} onNewComment={handleAddComment} />
+      </Card.Footer>
       </Card> 
+
       <Card >
         <Card.Body>
             <Comments comments={comments} article_id={article_id} currentUser={currentUser} onDeleteComment={handleDeleteComment}  />
         </Card.Body>
-        <Card.Footer>
-            <AddComment article_id={article_id} onNewComment={handleAddComment} />
-        </Card.Footer>
       </Card>
     </div>
   )

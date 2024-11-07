@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { Card, Button} from 'react-bootstrap'
 import { postArticleComment } from '../api';
+import ErrorPage from './ErrorPage';
 
 const AddComment = ({article_id, onNewComment}) => {
   const [body, setBody] = useState("");
   const [submit, setSubmit] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const handleSubmit = (event) =>{
     event.preventDefault();
@@ -17,9 +19,13 @@ const AddComment = ({article_id, onNewComment}) => {
       setBody("");
       setSubmit(false);
     }).catch((error)=>{
-      console.log("No comment has been posted, try again later", error);
+      setIsError(true);
       setSubmit(false);
     })
+  }
+
+  if (isError) {
+    return <ErrorPage message="No comment has been posted, try again later" />
   }
 
   return (

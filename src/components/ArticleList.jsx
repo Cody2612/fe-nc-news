@@ -22,8 +22,8 @@ setIsLoading(true);
     })
     .catch((error)=>{
         setIsLoading(false)
-        setIsError(`Error loading articles`)
-        console.log("No articles", error);
+        setIsError(true)
+
    });
 }, [sortBy, order]);
 
@@ -36,7 +36,7 @@ if (isLoading){
 }
 
 if(isError){
-   return <ErrorPage />;
+   return <ErrorPage message="No article found" />;
 }
 
 
