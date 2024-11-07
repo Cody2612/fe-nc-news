@@ -22,6 +22,11 @@ export const getArticlesById = (id) => {
         return response.data.article;
     })
 }
+export const getArticlesByTopic = (topic_slug) => {
+    return api.get(`/articles?topic=${topic_slug}`).then((response)=>{
+        return response.data.articles;
+    })
+}
 
 export const getCommentsByArticleId = (id) => {
     return api.get(`/articles/${id}/comments`).then((response)=>{
