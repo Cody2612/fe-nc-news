@@ -7,6 +7,7 @@ import Topics from '../src/pages/Topics'
 import Logout from'../src/pages/Logout'
 import Login from'../src/pages/Login'
 import ArticleCardDetails from './pages/ArticleCardDetails'
+import TopicArticle from './components/TopicArticle'
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path ="/" element = {<Articles />}/>
         <Route path ="/articles/:article_id" element = {<ArticleCardDetails />}/>
         <Route path ="/topics" element = {<Topics />}/>
+        <Route path ="/topics/:topic_slug" element = {<TopicArticle />}/>
         <Route path="/logout" element = {<Logout />} />
         <Route path="/login" element = {<Login />} />
       </Routes>
