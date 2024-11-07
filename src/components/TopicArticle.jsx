@@ -18,8 +18,7 @@ const TopicArticle= () => {
     })
     .catch((error)=>{
       setIsLoading(false)
-      setIsError(`Error loading articles`)
-      console.log("No articles", error);
+      setIsError(true)
     });
   }, [topic_slug]);
 
@@ -28,7 +27,7 @@ const TopicArticle= () => {
   }
 
   if(isError){
-  return <ErrorPage/>;
+  return <ErrorPage message="Error loading topic articles"/>;
   }
   
   return (
